@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">推箱子</string>
+    <string name="str_movebox_game">推箱子游戏</string>
+    <string name="str_start_game">开始游戏</string>
+    <string name="str_game_intro">游戏简介</string>
+    <string name="str_exit_game">退出游戏</string>
+    <string name="game_intro_short">设法让搬运工把所有箱子推到红旗标示的目的地，就过关了。</string>
+</resources>
