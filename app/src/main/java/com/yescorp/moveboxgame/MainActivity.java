@@ -25,6 +25,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        Button btnExitGame = (Button) findViewById(R.id.btn_exit);
+        btnExitGame.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        Button btnStartGame = (Button) findViewById(R.id.btn_start_game);
+        btnStartGame.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, GameLevelActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
