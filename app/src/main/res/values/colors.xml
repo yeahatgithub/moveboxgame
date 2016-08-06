@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="background">#3500ffff</color>
     <color name="board_background">#ffe6f0ff</color>
+    <color name="separate_line">#ff000000</color>
 </resources>

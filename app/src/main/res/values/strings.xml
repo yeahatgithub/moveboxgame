@@ -5,5 +5,6 @@
     <string name="str_game_intro">游戏简介</string>
     <string name="str_exit_game">退出游戏</string>
     <string name="game_intro_short">设法让搬运工把所有箱子推到红旗标示的目的地，就过关了。</string>
-    <string name="select_level">选关卡</string>
+    <string name="select_level">选择关卡</string>
+    <string name="what_you_select">你选中的关卡是：</string>
 </resources>

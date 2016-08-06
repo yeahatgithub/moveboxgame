@@ -14,14 +14,19 @@
         android:layout_height="wrap_content"
         android:text="@string/select_level"
         android:gravity="center"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:paddingBottom="12dp"/>
     <GridView
         android:id="@+id/gv_levels"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="3"
-        android:layout_below="@+id/tv_select_level"
-        android:verticalSpacing="8dp"
-        android:horizontalSpacing="8dp"></GridView>
+        android:layout_below="@id/tv_select_level"
+        android:layout_centerHorizontal="true"
+        android:verticalSpacing="20dp"
+        android:horizontalSpacing="8dp"
+        android:gravity="center">
+
+    </GridView>
 
 </RelativeLayout>
