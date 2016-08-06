@@ -3,6 +3,7 @@ package com.yescorp.moveboxgame;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.View;
 
 /**
@@ -14,6 +15,7 @@ public class GameView extends View{
 
     public GameView(Context context) {
         super(context);
+        GameBitmaps.loadGameBitmaps(getResources());
     }
 
     //当GameView实例的尺寸发生变化，就会调用onSizeChanged
@@ -38,5 +40,10 @@ public class GameView extends View{
             canvas.drawLine(0, r * mCellWidth, getWidth(), r * mCellWidth, linePaint);
         for (int c = 0; c <= CELL_NUM_PER_LINE; c++)
             canvas.drawLine(c * mCellWidth, 0, c * mCellWidth, CELL_NUM_PER_LINE * mCellWidth, linePaint);
+
+        //绘制搬运工
+        Rect srcRect = new Rect(0, 0, GameBitmaps.ManBitmap.getWidth(), GameBitmaps.ManBitmap.getHeight());
+        Rect destRect = new Rect(0, 0, (int)mCellWidth, (int)mCellWidth);
+        canvas.drawBitmap(GameBitmaps.ManBitmap, srcRect, destRect, null);
     }
 }
