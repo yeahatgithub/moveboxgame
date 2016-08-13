@@ -12,12 +12,9 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_game);
-
         int selected_level = getIntent().getIntExtra(KEY_SELECTED_LEVEL, 1);
-        TextView tvLevel = (TextView) findViewById(R.id.tv_level);
-        //tvLevel.setText(getResources().getString(R.string.what_you_select) + "第" + selected_level + "关");
 
+        //setContentView(R.layout.activity_game);
         GameView gameView = new GameView(this);
         setContentView(gameView);
     }

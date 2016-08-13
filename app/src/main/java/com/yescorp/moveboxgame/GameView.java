@@ -2,6 +2,7 @@ package com.yescorp.moveboxgame;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
@@ -35,7 +36,7 @@ public class GameView extends View{
 
         //绘制游戏区域
         Paint linePaint = new Paint();
-        linePaint.setColor(getResources().getColor(R.color.separate_line));
+        linePaint.setColor(Color.BLACK);
         for (int r = 0; r <= CELL_NUM_PER_LINE; r++)
             canvas.drawLine(0, r * mCellWidth, getWidth(), r * mCellWidth, linePaint);
         for (int c = 0; c <= CELL_NUM_PER_LINE; c++)
