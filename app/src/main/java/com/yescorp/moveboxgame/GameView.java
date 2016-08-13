@@ -61,10 +61,20 @@ public class GameView extends View{
 
         int touch_x = (int) event.getX();   //触摸点的x坐标
         int touch_y = (int) event.getY();   //触摸点的y坐标
-        if (touch_blow_to_man(touch_x, touch_y, mManRow, mManColumn))
-            mManRow++;
+        if (touch_blow_to_man(touch_x, touch_y, mManRow, mManColumn))  //按在下方
+            if (mManRow + 1 < CELL_NUM_PER_LINE)
+                mManRow++;
+        if (touch_right_to_man(touch_x, touch_y, mManRow, mManColumn))  //按在右侧
+            if (mManColumn + 1 < CELL_NUM_PER_LINE)
+                mManColumn++;
         postInvalidate();
         return true;
+    }
+
+    private boolean touch_right_to_man(int touch_x, int touch_y, int manRow, int manColumn) {
+        int rightColumn = manColumn + 1;
+        Rect rightRect = getRect(manRow, rightColumn);
+        return rightRect.contains(touch_x, touch_y);
     }
 
     private boolean touch_blow_to_man(int touch_x, int touch_y, int manRow, int manColumn) {
@@ -75,7 +85,7 @@ public class GameView extends View{
 
     @NonNull
     private Rect getRect(int row, int column) {
-        int left = (int)(column * mCellWidth);  //int left = manColumn * mCellWidth; //会报错
+        int left = (int)(column * mCellWidth);
         int top = (int) (row * mCellWidth);
         int right = (int)((column + 1) * mCellWidth);
         int bottom = (int)((row + 1) * mCellWidth);
