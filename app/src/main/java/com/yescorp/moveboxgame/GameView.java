@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -13,6 +15,9 @@ import android.view.View;
 public class GameView extends View{
     private float mCellWidth;
     public static final int CELL_NUM_PER_LINE = 12;
+
+    private int mManRow = 0;
+    private int mManColumn = 0;
 
     public GameView(Context context) {
         super(context);
@@ -44,7 +49,36 @@ public class GameView extends View{
 
         //绘制搬运工
         Rect srcRect = new Rect(0, 0, GameBitmaps.ManBitmap.getWidth(), GameBitmaps.ManBitmap.getHeight());
-        Rect destRect = new Rect(0, 0, (int)mCellWidth, (int)mCellWidth);
+        //Rect destRect = new Rect(0, 0, (int)mCellWidth, (int)mCellWidth);
+        Rect destRect = getRect(mManRow, mManColumn);
         canvas.drawBitmap(GameBitmaps.ManBitmap, srcRect, destRect, null);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() != MotionEvent.ACTION_DOWN)
+            return true;
+
+        int touch_x = (int) event.getX();   //触摸点的x坐标
+        int touch_y = (int) event.getY();   //触摸点的y坐标
+        if (touch_blow_to_man(touch_x, touch_y, mManRow, mManColumn))
+            mManRow++;
+        postInvalidate();
+        return true;
+    }
+
+    private boolean touch_blow_to_man(int touch_x, int touch_y, int manRow, int manColumn) {
+        int belowRow = manRow + 1;
+        Rect belowRect = getRect(belowRow, manColumn);
+        return belowRect.contains(touch_x, touch_y);
+    }
+
+    @NonNull
+    private Rect getRect(int row, int column) {
+        int left = (int)(column * mCellWidth);  //int left = manColumn * mCellWidth; //会报错
+        int top = (int) (row * mCellWidth);
+        int right = (int)((column + 1) * mCellWidth);
+        int bottom = (int)((row + 1) * mCellWidth);
+        return new Rect(left, top, right, bottom);
     }
 }
