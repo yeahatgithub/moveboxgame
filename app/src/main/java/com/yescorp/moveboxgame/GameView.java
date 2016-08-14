@@ -18,6 +18,8 @@ public class GameView extends View{
 
     private int mManRow = 0;
     private int mManColumn = 0;
+    private int mBoxRow = 5;      //箱子一开始处在游戏区域中间位置
+    private int mBoxColumn = 5;
 
     public GameView(Context context) {
         super(context);
@@ -52,6 +54,11 @@ public class GameView extends View{
         //Rect destRect = new Rect(0, 0, (int)mCellWidth, (int)mCellWidth);
         Rect destRect = getRect(mManRow, mManColumn);
         canvas.drawBitmap(GameBitmaps.ManBitmap, srcRect, destRect, null);
+
+        //绘制箱子
+        srcRect.set(0, 0, GameBitmaps.BoxBitmap.getWidth(), GameBitmaps.BoxBitmap.getHeight());
+        destRect = getRect(mBoxRow, mBoxColumn);
+        canvas.drawBitmap(GameBitmaps.BoxBitmap, srcRect, destRect, null);
     }
 
     @Override
@@ -62,20 +69,74 @@ public class GameView extends View{
         int touch_x = (int) event.getX();   //触摸点的x坐标
         int touch_y = (int) event.getY();   //触摸点的y坐标
         if (touch_blow_to_man(touch_x, touch_y, mManRow, mManColumn))  //按在下方
-            if (mManRow + 1 < CELL_NUM_PER_LINE)
-                mManRow++;
+            handleDown();
+
         if (touch_right_to_man(touch_x, touch_y, mManRow, mManColumn))  //按在右侧
-            if (mManColumn + 1 < CELL_NUM_PER_LINE)
-                mManColumn++;
+            handleRight();
         if (touch_above_to_man(touch_x, touch_y, mManRow, mManColumn))
-            if (mManRow > 0)
-                mManRow--;
+            handleAbove();
         if (touch_left_to_man(touch_x, touch_y, mManRow, mManColumn))
-            if (mManColumn > 0)
-                mManColumn--;
+            handleLeft();
         postInvalidate();
         return true;
     }
+
+    private void handleLeft() {
+        if (isBoxLeftToMan()){
+            if (mBoxColumn > 0){
+                mBoxColumn--;
+                mManColumn--;
+            }
+        }else if (mManColumn > 0)
+            mManColumn--;
+    }
+
+    private boolean isBoxLeftToMan() {
+        return mBoxRow == mManRow && mBoxColumn == mManColumn - 1;
+    }
+
+    private void handleAbove() {
+        if (isBoxAboveMan()){
+            if (mBoxRow > 0){
+                mBoxRow--;
+                mManRow--;
+            }
+        } else if (mManRow > 0)
+            mManRow--;
+    }
+
+    private boolean isBoxAboveMan() {
+        return mBoxColumn == mManColumn && mBoxRow == mManRow - 1;
+    }
+
+    private void handleDown() {
+        if (isBoxBlowMan()) {
+            if (mBoxRow + 1 < CELL_NUM_PER_LINE) {
+                mBoxRow++;
+                mManRow++;
+            }
+        } else if (mManRow + 1 < CELL_NUM_PER_LINE)
+            mManRow++;
+    }
+
+    private void handleRight() {
+        if (isBoxRightToMan()) {
+            if (mBoxColumn + 1 < CELL_NUM_PER_LINE) {
+                mBoxColumn++;
+                mManColumn++;
+            }
+        } else if (mManColumn + 1 < CELL_NUM_PER_LINE)
+            mManColumn++;
+    }
+
+    private boolean isBoxRightToMan() {
+        return mBoxRow == mManRow && mBoxColumn == mManColumn + 1;
+    }
+
+    private boolean isBoxBlowMan() {
+        return mBoxColumn == mManColumn && mBoxRow == mManRow + 1;
+    }
+
 
     private boolean touch_blow_to_man(int touch_x, int touch_y, int manRow, int manColumn) {
         int belowRow = manRow + 1;

@@ -9,10 +9,13 @@ import android.graphics.BitmapFactory;
  */
 public class GameBitmaps {
     public static Bitmap ManBitmap = null;
+    public static Bitmap BoxBitmap = null;
 
     public static void loadGameBitmaps(Resources res){
         if (ManBitmap == null)
             ManBitmap = BitmapFactory.decodeResource(res, R.drawable.eggman_48x48);
+        if (BoxBitmap == null)
+            BoxBitmap = BitmapFactory.decodeResource(res, R.drawable.box_48x48);
     }
 
     public static void releaseGameBitmaps(){
@@ -20,5 +23,10 @@ public class GameBitmaps {
             ManBitmap.recycle();
             ManBitmap = null;
         }
+        if (BoxBitmap != null){
+            BoxBitmap.recycle();
+            BoxBitmap = null;
+        }
+
     }
 }
