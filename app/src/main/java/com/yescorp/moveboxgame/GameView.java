@@ -21,8 +21,11 @@ public class GameView extends View{
     private int mBoxRow = 5;      //箱子一开始处在游戏区域中间位置
     private int mBoxColumn = 5;
 
+    private GameActivity mGameActivity;
+
     public GameView(Context context) {
         super(context);
+        mGameActivity = (GameActivity) context;
         GameBitmaps.loadGameBitmaps(getResources());
     }
 
@@ -49,7 +52,7 @@ public class GameView extends View{
         for (int c = 0; c <= CELL_NUM_PER_LINE; c++)
             canvas.drawLine(c * mCellWidth, 0, c * mCellWidth, CELL_NUM_PER_LINE * mCellWidth, linePaint);
 
-        //绘制搬运工
+/*        //绘制搬运工
         Rect srcRect = new Rect(0, 0, GameBitmaps.ManBitmap.getWidth(), GameBitmaps.ManBitmap.getHeight());
         //Rect destRect = new Rect(0, 0, (int)mCellWidth, (int)mCellWidth);
         Rect destRect = getRect(mManRow, mManColumn);
@@ -58,7 +61,34 @@ public class GameView extends View{
         //绘制箱子
         srcRect.set(0, 0, GameBitmaps.BoxBitmap.getWidth(), GameBitmaps.BoxBitmap.getHeight());
         destRect = getRect(mBoxRow, mBoxColumn);
-        canvas.drawBitmap(GameBitmaps.BoxBitmap, srcRect, destRect, null);
+        canvas.drawBitmap(GameBitmaps.BoxBitmap, srcRect, destRect, null);*/
+
+        //根据游戏局面绘制游戏界面
+        Rect srcRect;
+        Rect destRect;
+        String [] labelInCells = mGameActivity.getCurrentState().getLabelInCells();
+        for (int r = 0; r < labelInCells.length; r++)
+            for (int c = 0; c < labelInCells[r].length(); c++){
+                destRect = getRect(r, c);
+                switch (labelInCells[r].charAt(c)){
+                    case 'W':
+                        srcRect = new Rect(0, 0, GameBitmaps.WallBitmap.getWidth(), GameBitmaps.WallBitmap.getHeight());
+                        canvas.drawBitmap(GameBitmaps.WallBitmap, srcRect, destRect, null);
+                        break;
+                    case 'B':
+                        srcRect = new Rect(0, 0, GameBitmaps.BoxBitmap.getWidth(), GameBitmaps.BoxBitmap.getHeight());
+                        canvas.drawBitmap(GameBitmaps.BoxBitmap, srcRect, destRect, null);
+                        break;
+                    case 'F':
+                        srcRect = new Rect(0, 0, GameBitmaps.FlagBitmap.getWidth(), GameBitmaps.FlagBitmap.getHeight());
+                        canvas.drawBitmap(GameBitmaps.FlagBitmap, srcRect, destRect, null);
+                        break;
+                    case 'M':
+                        srcRect = new Rect(0, 0, GameBitmaps.ManBitmap.getWidth(), GameBitmaps.ManBitmap.getHeight());
+                        canvas.drawBitmap(GameBitmaps.ManBitmap, srcRect, destRect, null);
+                        break;
+                }
+            }
     }
 
     @Override
