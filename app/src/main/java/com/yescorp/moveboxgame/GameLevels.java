@@ -9,8 +9,6 @@ import java.util.List;
 public class GameLevels {
     public static final int DEFAULT_ROW_NUM = 12;
     public static final int DEFAULT_COLUMN_NUM = 12;
-    public static ArrayList<String[]> OriginalLevels = new ArrayList<>();
-
     //游戏区单元格放了什么
     public static final char NOTHING = ' ';         //该单元格啥也没有
     public static final char BOX = 'B';             //该单元格放的是箱子
@@ -34,6 +32,7 @@ public class GameLevels {
             "W          W",
             "WWWWWWWWWWWW"
     };
+
     public static final String [] LEVEL_2 = {
             "            ",
             "            ",
@@ -49,12 +48,22 @@ public class GameLevels {
             "            "
     };
 
+    public static ArrayList<String[]> OriginalLevels = new ArrayList<>();
+
     public static void loadGameLevels(){
-        OriginalLevels.add(LEVEL_1);
-        OriginalLevels.add(LEVEL_2);
+        if (OriginalLevels.isEmpty()) {
+            OriginalLevels.add(LEVEL_1);
+            OriginalLevels.add(LEVEL_2);
+        }
+    }
+
+    public static String [] getLevel(int level){
+        loadGameLevels();
+        return OriginalLevels.get(level - 1);
     }
 
     public static List<String> getLevelList(){
+        loadGameLevels();
         List<String> levelList = new ArrayList<>();
         int levelNum = OriginalLevels.size();
         for (int i = 1; i <= levelNum; i++){
@@ -62,10 +71,6 @@ public class GameLevels {
         }
 
         return levelList;
-    }
-
-    public static String [] getLevel(int level){
-        return OriginalLevels.get(level - 1);
     }
 
 }

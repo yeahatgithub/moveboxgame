@@ -7,13 +7,15 @@ public class GameState {
     private int mManRow;
     private int mManColumn;
 
-    private String[] mLabelInCells;
+    private StringBuffer[] mLabelInCells;
 
     public GameState(String[] initialState){
-        mLabelInCells = initialState;
+        mLabelInCells = new StringBuffer[initialState.length];
+        for (int i = 0; i < initialState.length; i++)
+            mLabelInCells[i] = new StringBuffer(initialState[i]);
     }
 
-    public String[] getLabelInCells() {
+    public StringBuffer[] getLabelInCells() {
         return mLabelInCells;
     }
 

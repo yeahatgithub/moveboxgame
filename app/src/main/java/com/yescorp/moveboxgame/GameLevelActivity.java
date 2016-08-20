@@ -21,7 +21,6 @@ public class GameLevelActivity extends AppCompatActivity {
 
         GridView gv_levels = (GridView) findViewById(R.id.gv_levels);
 //        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.gv_levels_item_textview, levelList);
-        GameLevels.loadGameLevels();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.gv_levels_item_textview, GameLevels.getLevelList());
         gv_levels.setAdapter(arrayAdapter);
 

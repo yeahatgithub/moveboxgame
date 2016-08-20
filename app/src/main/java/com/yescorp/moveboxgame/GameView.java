@@ -64,9 +64,13 @@ public class GameView extends View{
         canvas.drawBitmap(GameBitmaps.BoxBitmap, srcRect, destRect, null);*/
 
         //根据游戏局面绘制游戏界面
+        drawGameBoard(canvas);
+    }
+
+    private void drawGameBoard(Canvas canvas) {
         Rect srcRect;
         Rect destRect;
-        String [] labelInCells = mGameActivity.getCurrentState().getLabelInCells();
+        StringBuffer [] labelInCells = mGameActivity.getCurrentState().getLabelInCells();
         for (int r = 0; r < labelInCells.length; r++)
             for (int c = 0; c < labelInCells[r].length(); c++){
                 destRect = getRect(r, c);
